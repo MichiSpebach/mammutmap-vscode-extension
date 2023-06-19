@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+	  "target": "es2021",
+	  "strict": true,
+	  "allowJs": false,
+	  "skipLibCheck": true,
+	  "module": "es2022",
+	  "noImplicitAny": true,
+	  "noImplicitOverride": true,
+	  "sourceMap": true,
+	  "declaration": true,
+	  "baseUrl": ".",
+	  "outDir": "out/webview",
+	  "moduleResolution": "node",
+	  "resolveJsonModule": true
+	},
+	"include": [
+	  "src/webview/**/*"
+	]
+  }
+  

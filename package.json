@@ -14,15 +14,15 @@
   "contributes": {
     "commands": [
       {
-        "command": "mammutmap.helloWorld",
-        "title": "Hello World"
+        "command": "mammutmap.mammutmap",
+        "title": "Mammutmap"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "tsc -p ./ && tsc -p ./tsconfigWebview.json",
+    "watch": "tsc -watch -p ./ && tsc -p ./tsconfigWebview.json",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
