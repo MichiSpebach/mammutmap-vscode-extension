@@ -10,12 +10,13 @@
 	  "sourceMap": true,
 	  "declaration": true,
 	  "baseUrl": ".",
-	  "outDir": "out/webview",
+	  "outDir": "out",
 	  "moduleResolution": "node",
 	  "resolveJsonModule": true
 	},
 	"include": [
-	  "src/webview/**/*"
+	  "src/webview/**/*",
+	  "src/shared/**/*"
 	]
   }
   

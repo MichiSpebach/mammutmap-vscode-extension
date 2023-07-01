@@ -18,6 +18,7 @@
 		"src"
 	],
 	"exclude": [
-		"src/webview"
+		"src/webview",
+		"src/shared"
 	]
 }

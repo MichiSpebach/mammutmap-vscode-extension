@@ -9,23 +9,24 @@ import * as contextMenu from '../../out/dist/core/contextMenu.js'
 import { DirectDomAdapter } from '../../out/dist/browserApp/DirectDomAdapter.js'
 import { HtmlApplicationMenu } from '../../out/dist/core/applicationMenu/HtmlApplicationMenu.js'
 import { HtmlContextMenuPopup } from '../../out/dist/browserApp/HtmlContextMenuPopup.js'
-import { searchAndLoadMapCloseTo } from '../../out/dist/core/Map.js'
 import { util } from '../../out/dist/core/util/util.js'
 import { MessageSendingFileSystemAdapter } from './MessageSendingFileSystemAdapter.js'
-import { log } from '../../out/dist/core/logService.js'
+import * as map from '../../out/dist/core/Map.js'
 
 init()
 
 async function init(): Promise<void> {
     //processing.init(new BrowserProcessingAdapter()) TODO
     domAdapter.init(new DirectDomAdapter())
-    fileSystemAdapter.init(new MessageSendingFileSystemAdapter())
+    const fileSystem = new MessageSendingFileSystemAdapter()
+    fileSystemAdapter.init(fileSystem)
     await settings.init()
     mainWidget.render()
     commandLine.init()
     contextMenu.init(new HtmlContextMenuPopup())
     await applicationMenu.initAndRender(new HtmlApplicationMenu())
     await pluginLoader.loadPlugins()
+    await map.searchAndLoadMapCloseTo(await fileSystem.getWorkspaceFolderPath())
 }
 
 window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {

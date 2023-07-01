@@ -1,15 +1,19 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { VsCodeFileSystemAdapter } from './VsCodeFileSystemAdapter';
+import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
 	const openMapDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.mammutmap', () => {
-		const mapPanel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {enableScripts: true, localResourceRoots: [vscode.Uri.file(context.extensionPath)] })
+		const mapPanel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
+			enableScripts: true,
+			localResourceRoots: [vscode.Uri.file(context.extensionPath)],
+			retainContextWhenHidden: true
+		})
 		mapPanel.webview.html = getWebviewContent(mapPanel.webview, context.extensionUri)
-		const fileSystem: VsCodeFileSystemAdapter = new VsCodeFileSystemAdapter(context.extensionUri)
+		const fileSystem = new VsCodeNodeJsFileSystemAdapter(context.extensionUri)
 		mapPanel.webview.onDidReceiveMessage(async message => {
 			try {
 				const result = await (fileSystem as any)[message.command](...message.parameters)

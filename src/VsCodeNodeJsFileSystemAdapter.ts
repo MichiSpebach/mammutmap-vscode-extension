@@ -1,9 +1,11 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs'
-import { FileSystemAdapter, Dirent, OpenDialogReturnValue, Stats, OpenDialogOptions, DirentBasicImpl } from '../out/distCommonJs/core/fileSystemAdapter';
+import { Dirent, OpenDialogReturnValue, Stats, OpenDialogOptions, DirentBasicImpl } from '../out/distCommonJs/core/fileSystemAdapter';
 import { NodeJsFileSystemAdapter } from '../out/distCommonJs/electronApp/NodeJsFileSystemAdapter';
+import { log } from '../out/distCommonJs/core/logService'
+import { VsCodeFileSystemAdapter } from './sharedCommonJs/VsCodeFileSystemAdapter';
 
-export class VsCodeFileSystemAdapter extends FileSystemAdapter {
+export class VsCodeNodeJsFileSystemAdapter extends VsCodeFileSystemAdapter {
     private readonly nodeJsFileSystem: NodeJsFileSystemAdapter = new NodeJsFileSystemAdapter()
     
     public constructor(
@@ -77,14 +79,24 @@ export class VsCodeFileSystemAdapter extends FileSystemAdapter {
         return this.nodeJsFileSystem.rename(this.toExtensionPath(oldPath), this.toExtensionPath(newPath))
     }
 
-    public async showOpenDialog(options: OpenDialogOptions): Promise<OpenDialogReturnValue> {
-        //return this.nodeJsFileSystem.showOpenDialog(options)
-        // TODO: this is only a hack
+    public showOpenDialog(options: OpenDialogOptions): Promise<OpenDialogReturnValue> {
+        return this.nodeJsFileSystem.showOpenDialog(options)
+    }
+
+    public async getWorkspaceFolderPath(): Promise<string> {
         const workspaceFolders: readonly vscode.WorkspaceFolder[] | undefined = vscode.workspace.workspaceFolders
         if (!workspaceFolders) {
-            throw new Error('VsCodeFileSystemAdapter::showOpenDialog workspaceFolders is undefined.')
+            throw new Error('VsCodeNodeJsFileSystemAdapter::getWorkspaceFolderPath() workspaceFolders is undefined.')
         }
-        return {filePaths: workspaceFolders.map(folder => folder.uri.fsPath)}
+        if (workspaceFolders.length < 1) {
+            throw new Error('VsCodeNodeJsFileSystemAdapter::getWorkspaceFolderPath() workspaceFolders is is empty.')
+        }
+        if (workspaceFolders.length !== 1) {
+            let message = `VsCodeNodeJsFileSystemAdapter::getWorkspaceFolderPath() expected exactly one workspaceFolder`
+            message += ` but are ${workspaceFolders.length}, returning first that is '${workspaceFolders[0]}'.`
+            log.warning(message)
+        }
+        return workspaceFolders[0].uri.fsPath
     }
 
     private toExtensionPath(path: string): string {
