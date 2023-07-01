@@ -1,0 +1,282 @@
+{
+	"id": "g4e1oheuieg",
+	"x": 28,
+	"y": 32,
+	"width": 40,
+	"height": 28,
+	"links": [
+		{
+			"id": "gpoginkpme",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "ee45gdt4s0o",
+						"boxName": "VsCodeFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "d97pcogmvl",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 40,
+						"y": 40
+					}
+				]
+			},
+			"tags": [
+				"falsePositive"
+			]
+		},
+		{
+			"id": "11n1ubiohmo",
+			"from": {
+				"path": [
+					{
+						"boxId": "ee45gdt4s0o",
+						"boxName": "VsCodeFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"falsePositive"
+			]
+		},
+		{
+			"id": "9fdajmffoa8",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "n4lm9krtq78",
+			"from": {
+				"path": [
+					{
+						"boxId": "ee45gdt4s0o",
+						"boxName": "VsCodeNodeJsFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "hje7stgk8b",
+						"boxName": "sharedCommonJs",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "kchpbovlv68",
+						"boxName": "VsCodeFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"isA"
+			]
+		},
+		{
+			"id": "bif5qgqfm8o",
+			"from": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 74,
+						"y": 26
+					},
+					{
+						"boxId": "tobpgqg96f8",
+						"boxName": "MessageSendingFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "oha6ji1ljg",
+						"boxName": "shared",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "3kof8q0eg08",
+						"boxName": "VsCodeFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"isA"
+			]
+		},
+		{
+			"id": "2gu1majreu",
+			"from": {
+				"path": [
+					{
+						"boxId": "skfhhs80pe8",
+						"boxName": "nodeskfhhs80pe8",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "hje7stgk8b",
+						"boxName": "sharedCommonJs",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"repetition"
+			]
+		},
+		{
+			"id": "ne036iqke3g",
+			"from": {
+				"path": [
+					{
+						"boxId": "skfhhs80pe8",
+						"boxName": "nodeskfhhs80pe8",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "oha6ji1ljg",
+						"boxName": "shared",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"repetition"
+			]
+		},
+		{
+			"id": "hcug60nt71",
+			"from": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "ee45gdt4s0o",
+						"boxName": "VsCodeNodeJsFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"message passing"
+			]
+		}
+	],
+	"nodes": [
+		{
+			"id": "skfhhs80pe8",
+			"x": 56.00000000000001,
+			"y": 64
+		}
+	]
+}

@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import * as fs from 'fs'
 import { Dirent, OpenDialogReturnValue, Stats, OpenDialogOptions, DirentBasicImpl } from '../out/distCommonJs/core/fileSystemAdapter';
 import { NodeJsFileSystemAdapter } from '../out/distCommonJs/electronApp/NodeJsFileSystemAdapter';
-import { log } from '../out/distCommonJs/core/logService'
 import { VsCodeFileSystemAdapter } from './sharedCommonJs/VsCodeFileSystemAdapter';
 
 export class VsCodeNodeJsFileSystemAdapter extends VsCodeFileSystemAdapter {
@@ -94,7 +93,7 @@ export class VsCodeNodeJsFileSystemAdapter extends VsCodeFileSystemAdapter {
         if (workspaceFolders.length !== 1) {
             let message = `VsCodeNodeJsFileSystemAdapter::getWorkspaceFolderPath() expected exactly one workspaceFolder`
             message += ` but are ${workspaceFolders.length}, returning first that is '${workspaceFolders[0]}'.`
-            log.warning(message)
+            console.warn(message)
         }
         return workspaceFolders[0].uri.fsPath
     }

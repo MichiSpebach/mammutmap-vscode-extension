@@ -1,6 +1,3 @@
-# Mammutmap, feel free to remove this line to share the map via Git
-map/
-
 out
 dist
 node_modules

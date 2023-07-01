@@ -1,0 +1,1126 @@
+{
+	"id": "j9tsvr2akr8",
+	"x": 5,
+	"y": 5,
+	"width": 90,
+	"height": 90,
+	"links": [
+		{
+			"id": "uvvljqicoc",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 15.12,
+						"y": 8.624
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 58,
+						"y": 11.6
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 90,
+						"y": 18
+					},
+					{
+						"boxId": "fv43ooqinrg",
+						"boxName": "domAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "22jrj54348g",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.896,
+						"y": 8.4
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 56.4,
+						"y": 10
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 82,
+						"y": 10
+					},
+					{
+						"boxId": "o23murt7t1",
+						"boxName": "commandLine.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "159c5u8bl38",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.525,
+						"y": 8.355
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 46.608,
+						"y": 9.68
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 33.04,
+						"y": 8.4
+					},
+					{
+						"boxId": "9djrp0ou8l8",
+						"boxName": "applicationMenu",
+						"x": 26,
+						"y": 10
+					},
+					{
+						"boxId": "116fahavllg",
+						"boxName": "applicationMenu.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "dn0du5nhqu8",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 15.12,
+						"y": 9.744
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 58,
+						"y": 19.6
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 90,
+						"y": 58
+					},
+					{
+						"boxId": "40459dpea3g",
+						"boxName": "pluginLoader.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "1q0lsk28v1o",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.448,
+						"y": 9.52
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 53.2,
+						"y": 18
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 66,
+						"y": 50
+					},
+					{
+						"boxId": "p4ce0m552uo",
+						"boxName": "mainWidget.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "hnoec18v7l8",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.552,
+						"y": 9.072
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 46.8,
+						"y": 14.8
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 34,
+						"y": 34
+					},
+					{
+						"boxId": "99mcq7j63io",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "ak0lbn2e15o",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.328,
+						"y": 10.416
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 45.2,
+						"y": 24.4
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 26,
+						"y": 82
+					},
+					{
+						"boxId": "lfm9i8pghmo",
+						"boxName": "Settings.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "h7u0fmo45e8",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.448,
+						"y": 8.624
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 53.2,
+						"y": 11.6
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 66,
+						"y": 18
+					},
+					{
+						"boxId": "qhb9jtnebk8",
+						"boxName": "contextMenu.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "2m8sijfols",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 8.848,
+						"y": 8.848
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 13.2,
+						"y": 13.2
+					},
+					{
+						"boxId": "al6j5uhpucg",
+						"boxName": "browserApp",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "1lr5o20s0do",
+						"boxName": "DirectDomAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "tvpcrh2ar2",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.579,
+						"y": 8.355
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 46.992,
+						"y": 9.68
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 34.96,
+						"y": 8.4
+					},
+					{
+						"boxId": "9djrp0ou8l8",
+						"boxName": "applicationMenu",
+						"x": 74,
+						"y": 10
+					},
+					{
+						"boxId": "mai6tgrep68",
+						"boxName": "HtmlApplicationMenu.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "29oqlqjldug",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 10.192,
+						"y": 9.744
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 22.8,
+						"y": 19.6
+					},
+					{
+						"boxId": "al6j5uhpucg",
+						"boxName": "browserApp",
+						"x": 74,
+						"y": 58
+					},
+					{
+						"boxId": "kqv3j9tvcqg",
+						"boxName": "HtmlContextMenuPopup.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "0tke8l42n5",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 45.2
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.749,
+						"y": 10.667
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 48.208,
+						"y": 26.192
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 41.04,
+						"y": 90.96
+					},
+					{
+						"boxId": "i2ige5mhre",
+						"boxName": "util",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "905lo0bjmr",
+						"boxName": "util.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "0td5eh5atcg",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 54.8
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "tobpgqg96f8",
+						"boxName": "MessageSendingFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.552,
+						"y": 9.072
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 46.8,
+						"y": 14.8
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 34,
+						"y": 34
+					},
+					{
+						"boxId": "99mcq7j63io",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "1m15lnhhq58",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 54.8
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "tobpgqg96f8",
+						"boxName": "MessageSendingFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.776,
+						"y": 9.52
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 48.4,
+						"y": 18
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 42,
+						"y": 50
+					},
+					{
+						"boxId": "8h6qo2aul9o",
+						"boxName": "logService.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "b4lmmr2810g",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 54.8,
+						"y": 54.8
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 74,
+						"y": 74
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.776,
+						"y": 9.52
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 48.4,
+						"y": 18
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 42,
+						"y": 50
+					},
+					{
+						"boxId": "8h6qo2aul9o",
+						"boxName": "logService.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "noq547br4d8",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.099,
+						"y": 45.257
+					},
+					{
+						"boxId": "hje7stgk8b",
+						"boxName": "sharedCommonJs",
+						"x": 25.496,
+						"y": 26.286
+					},
+					{
+						"boxId": "kchpbovlv68",
+						"boxName": "VsCodeFileSystemAdapter.ts",
+						"x": 48.199,
+						"y": 51.02
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.552,
+						"y": 58.072
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 46.8,
+						"y": 14.8
+					},
+					{
+						"boxId": "pip6kke56ng",
+						"boxName": "core",
+						"x": 34,
+						"y": 34
+					},
+					{
+						"boxId": "4kjt6ocgh3o",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "kg5uio5iq88",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 45.2,
+						"y": 25.2
+					},
+					{
+						"boxId": "oha6ji1ljg",
+						"boxName": "shared",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "3kof8q0eg08",
+						"boxName": "VsCodeFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 13.552,
+						"y": 9.072
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 46.8,
+						"y": 14.8
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 34,
+						"y": 34
+					},
+					{
+						"boxId": "99mcq7j63io",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "q3rrevo0bi8",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 17.621,
+						"y": 56.923
+					},
+					{
+						"boxId": "ee45gdt4s0o",
+						"boxName": "VsCodeNodeJsFileSystemAdapter.ts",
+						"x": 48.107,
+						"y": 44.613
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.552,
+						"y": 58.072
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 46.8,
+						"y": 14.8
+					},
+					{
+						"boxId": "pip6kke56ng",
+						"boxName": "core",
+						"x": 34,
+						"y": 34
+					},
+					{
+						"boxId": "4kjt6ocgh3o",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "i9vt2fe1h6",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 17.613,
+						"y": 59.182
+					},
+					{
+						"boxId": "ee45gdt4s0o",
+						"boxName": "VsCodeNodeJsFileSystemAdapter.ts",
+						"x": 48.065,
+						"y": 55.91
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 18.248,
+						"y": 59.64
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 73.2,
+						"y": 26
+					},
+					{
+						"boxId": "omm2i6po70o",
+						"boxName": "electronApp",
+						"x": 6,
+						"y": 90
+					},
+					{
+						"boxId": "tvdp1sf1vdg",
+						"boxName": "NodeJsFileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"library"
+			]
+		}
+	],
+	"nodes": [],
+	"srcRootPath": "../",
+	"mapRootPath": "./",
+	"linkTags": [
+		{
+			"name": "falsePositive",
+			"count": 2,
+			"appearance": {
+				"mode": "notRendered"
+			}
+		},
+		{
+			"name": "repetition",
+			"count": 2,
+			"appearance": {
+				"color": "red"
+			}
+		},
+		{
+			"name": "message passing",
+			"count": 1,
+			"appearance": {
+				"color": "magenta"
+			}
+		},
+		{
+			"name": "library",
+			"count": 19,
+			"appearance": {
+				"mode": "visibleEnds"
+			}
+		},
+		{
+			"name": "isA",
+			"count": 2,
+			"appearance": {
+				"color": "aqua"
+			}
+		}
+	],
+	"defaultLinkAppearance": {}
+}

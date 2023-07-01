@@ -1,0 +1,56 @@
+{
+	"id": "5o04ebn2ra8",
+	"x": 40,
+	"y": 8,
+	"width": 32,
+	"height": 28,
+	"links": [
+		{
+			"id": "gaq1rfsl6f8",
+			"from": {
+				"path": [
+					{
+						"boxId": "16iqkibbbj8",
+						"boxName": "index.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "tobpgqg96f8",
+						"boxName": "MessageSendingFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "e1bsd6bk708",
+			"from": {
+				"path": [
+					{
+						"boxId": "tobpgqg96f8",
+						"boxName": "MessageSendingFileSystemAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		}
+	],
+	"nodes": []
+}
