@@ -100,7 +100,7 @@ export class VsCodeNodeJsFileSystemAdapter extends VsCodeFileSystemAdapter {
 
     private toExtensionPath(path: string): string {
         if (path.startsWith('./')) {
-            return vscode.Uri.joinPath(this.extensionUri, 'out', 'dist', path).fsPath
+            return vscode.Uri.joinPath(this.extensionUri, 'out', path).fsPath
         }
         return path
     }
