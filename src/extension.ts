@@ -3,27 +3,44 @@
 import * as vscode from 'vscode';
 import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
 
+let mapPanel: vscode.WebviewPanel|undefined = undefined
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
 	const openMapDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.mammutmap', () => {
-		const mapPanel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
-			enableScripts: true,
-			localResourceRoots: [vscode.Uri.file(context.extensionPath)],
-			retainContextWhenHidden: true
-		})
-		mapPanel.webview.html = getWebviewContent(mapPanel.webview, context.extensionUri)
-		const fileSystem = new VsCodeNodeJsFileSystemAdapter(context.extensionUri)
-		mapPanel.webview.onDidReceiveMessage(async message => {
-			try {
-				const result = await (fileSystem as any)[message.command](...message.parameters)
-				mapPanel.webview.postMessage({id: message.id, result})
-			} catch(error: any) {
-				mapPanel.webview.postMessage({id: message.id, error: error.toString()}) // TODO: also send stacktrace?
-			}
-		})
+		createOrRevealMapPanel(context)
 	})
 	context.subscriptions.push(openMapDisposable)
+}
+
+function createOrRevealMapPanel(context: vscode.ExtensionContext): vscode.WebviewPanel {
+	if (mapPanel) {
+		mapPanel.reveal()
+		return mapPanel
+	}
+
+	mapPanel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
+		enableScripts: true,
+		localResourceRoots: [vscode.Uri.file(context.extensionPath)],
+		retainContextWhenHidden: true
+	})
+	mapPanel.webview.html = getWebviewContent(mapPanel.webview, context.extensionUri)
+	mapPanel.webview.onDidReceiveMessage(async message => {
+		if (!mapPanel) {
+			vscode.window.showWarningMessage(`mapPanel.webview.onDidReceiveMessage called while mapPanel is ${mapPanel}, received message is ${message}`)
+			return
+		}
+		try {
+			const fileSystem = new VsCodeNodeJsFileSystemAdapter(context.extensionUri)
+			const result = await (fileSystem as any)[message.command](...message.parameters)
+			mapPanel.webview.postMessage({id: message.id, result})
+		} catch(error: any) {
+			mapPanel.webview.postMessage({id: message.id, error: error.toString()}) // TODO: also send stacktrace?
+		}
+	})
+	mapPanel.onDidDispose(() => mapPanel = undefined)
+	return mapPanel
 }
 
 function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): string {
