@@ -1,5 +1,5 @@
 import { log } from '../../out/dist/core/logService.js'
-import { util } from '../../out/dist/core/util/util.js'
+import { map } from '../../out/dist/core/Map.js'
 
 interface vscode {
     postMessage(message: any): void
@@ -12,10 +12,27 @@ const ongoingPromises: Map<number, {resolve: (value: any) => void, reject: (reas
 let nextId: number = 0;
 
 window.addEventListener('message', event => {
-    const data: {id: number, result?: any, error?: any} = event.data
+    const data: {id: number, target?: string, command?: string, parameters?: any[], result?: any, error?: any} = event.data
+    if (data.target) {
+        if (data.target === 'map') {
+            if (!map) {
+                log.warning(`messageBroker: received RequestMessage with target '${data.target}', but map is not initialized.`)
+                return
+            }
+            if (!data.parameters) {
+                log.warning(`messageBroker: expected at least one parameter for command '${data.target}'::'${data.command}' but parameters are '${data.parameters}'.`)
+                return
+            }
+            map.flyTo(data.parameters[0])
+            return
+        }
+        log.warning(`messageBroker: received RequestMessage with unknown target '${data.target}'.`)
+        return
+    }
+
     const promise = ongoingPromises.get(data.id)
     if (!promise) {
-        log.warning(`messageManager: ongoingPromises does not contain entry with id '${data.id}'.`)
+        log.warning(`messageBroker: ongoingPromises does not contain entry with id '${data.id}'.`)
         return
     }
     if (data.result !== undefined) {
@@ -25,7 +42,7 @@ window.addEventListener('message', event => {
         promise.reject(data.error)
     }
     if (data.result === undefined && data.error === undefined) {
-        log.warning(`messageManager: event.data with id '${data.id}' has neither result nor error, promise will neither resolve nor reject.`)
+        log.warning(`messageBroker: event.data with id '${data.id}' has neither result nor error, promise will neither resolve nor reject.`)
     }
 })
 

@@ -12,6 +12,22 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 		createOrRevealMapPanel(context)
 	})
 	context.subscriptions.push(openMapDisposable)
+
+	const flyToPathDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.flyToPath', (data) => {
+		console.log(data.path)
+		if (!data || !data.path || typeof data.path !== 'string') {
+			vscode.window.showErrorMessage(`mammutmap.flyToPath called without data.path, data is ${data}`)
+		}
+		const mapPanel: vscode.WebviewPanel = createOrRevealMapPanel(context)
+		let path: string = data.path
+		if (path.startsWith('/c:/')) {
+			path = path.replace('/c:/', 'c:/')
+		} else {
+			vscode.window.showWarningMessage(`mammutmap.flyToPath expected data.path '${data}' to start with '/c:/'.`)
+		}
+		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [path]})
+	})
+	context.subscriptions.push(flyToPathDisposable)
 }
 
 function createOrRevealMapPanel(context: vscode.ExtensionContext): vscode.WebviewPanel {

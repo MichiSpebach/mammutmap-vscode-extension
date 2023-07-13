@@ -2,7 +2,7 @@
   "name": "mammutmap",
   "displayName": "Mammutmap",
   "description": "",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.78.0"
   },
@@ -16,8 +16,21 @@
       {
         "command": "mammutmap.mammutmap",
         "title": "Mammutmap"
+      },
+      {
+        "command": "mammutmap.flyToPath",
+        "title": "Show in Mammutmap"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "mammutmap.flyToPath",
+          "group": "navigation",
+          "when": "explorerResourceIsFolder"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
