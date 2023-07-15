@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
+import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager';
 
 let mapPanel: vscode.WebviewPanel|undefined = undefined
 
@@ -42,11 +43,10 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 		retainContextWhenHidden: true
 	})
 	mapPanel.webview.html = getWebviewContent(mapPanel.webview, context.extensionUri)
-	let resolve: (value: vscode.WebviewPanel) => void
-	const promise = new Promise<vscode.WebviewPanel>(res => resolve = res)
+	const promise = new SchedulablePromise<vscode.WebviewPanel>(() => mapPanel!)
 	const timeout = setTimeout(() => {
 		vscode.window.showWarningMessage(`createOrRevealMapPanel Mammutmap did not greet within 5 seconds.`)
-		resolve(mapPanel!)
+		promise.run()
 	}, 5000)
 	mapPanel.webview.onDidReceiveMessage(async message => {
 		if (!mapPanel) {
@@ -55,7 +55,7 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 		}
 		if (message.command === 'greet') {
 			clearTimeout(timeout)
-			resolve(mapPanel)
+			promise.run()
 			return
 		}
 		try {
@@ -67,7 +67,7 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 		}
 	})
 	mapPanel.onDidDispose(() => mapPanel = undefined)
-	return promise
+	return promise.get()
 }
 
 function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): string {
