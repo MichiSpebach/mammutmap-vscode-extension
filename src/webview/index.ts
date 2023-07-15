@@ -12,6 +12,7 @@ import { HtmlContextMenuPopup } from '../../out/dist/browserApp/HtmlContextMenuP
 import { util } from '../../out/dist/core/util/util.js'
 import { MessageSendingFileSystemAdapter } from './MessageSendingFileSystemAdapter.js'
 import * as map from '../../out/dist/core/Map.js'
+import * as messageBroker from './messageBroker.js'
 
 init()
 
@@ -27,6 +28,7 @@ async function init(): Promise<void> {
     await applicationMenu.initAndRender(new HtmlApplicationMenu())
     await pluginLoader.loadPlugins()
     await map.searchAndLoadMapCloseTo(await fileSystem.getWorkspaceFolderPath())
+    messageBroker.postMessage('greet', ['Mammutmap initialized'])
 }
 
 window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {

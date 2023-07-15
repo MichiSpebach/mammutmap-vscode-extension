@@ -13,12 +13,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 	})
 	context.subscriptions.push(openMapDisposable)
 
-	const flyToPathDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.flyToPath', (data) => {
+	const flyToPathDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.flyToPath', async (data) => {
 		console.log(data.path)
 		if (!data || !data.path || typeof data.path !== 'string') {
 			vscode.window.showErrorMessage(`mammutmap.flyToPath called without data.path, data is ${data}`)
 		}
-		const mapPanel: vscode.WebviewPanel = createOrRevealMapPanel(context)
+		const mapPanel: vscode.WebviewPanel = await createOrRevealMapPanel(context)
 		let path: string = data.path
 		if (path.startsWith('/c:/')) {
 			path = path.replace('/c:/', 'c:/')
@@ -30,21 +30,32 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 	context.subscriptions.push(flyToPathDisposable)
 }
 
-function createOrRevealMapPanel(context: vscode.ExtensionContext): vscode.WebviewPanel {
+async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise<vscode.WebviewPanel> {
 	if (mapPanel) {
 		mapPanel.reveal()
 		return mapPanel
 	}
-
+	
 	mapPanel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
 		enableScripts: true,
 		localResourceRoots: [vscode.Uri.file(context.extensionPath)],
 		retainContextWhenHidden: true
 	})
 	mapPanel.webview.html = getWebviewContent(mapPanel.webview, context.extensionUri)
+	let resolve: (value: vscode.WebviewPanel) => void
+	const promise = new Promise<vscode.WebviewPanel>(res => resolve = res)
+	const timeout = setTimeout(() => {
+		vscode.window.showWarningMessage(`createOrRevealMapPanel Mammutmap did not greet within 5 seconds.`)
+		resolve(mapPanel!)
+	}, 5000)
 	mapPanel.webview.onDidReceiveMessage(async message => {
 		if (!mapPanel) {
-			vscode.window.showWarningMessage(`mapPanel.webview.onDidReceiveMessage called while mapPanel is ${mapPanel}, received message is ${message}`)
+			vscode.window.showWarningMessage(`mapPanel.webview.onDidReceiveMessage called while mapPanel is '${mapPanel}', received message is '${message}'.`)
+			return
+		}
+		if (message.command === 'greet') {
+			clearTimeout(timeout)
+			resolve(mapPanel)
 			return
 		}
 		try {
@@ -56,7 +67,7 @@ function createOrRevealMapPanel(context: vscode.ExtensionContext): vscode.Webvie
 		}
 	})
 	mapPanel.onDidDispose(() => mapPanel = undefined)
-	return mapPanel
+	return promise
 }
 
 function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): string {
