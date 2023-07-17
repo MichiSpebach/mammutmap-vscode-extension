@@ -3,30 +3,29 @@
 import * as vscode from 'vscode';
 import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
 import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager';
+import { Stats } from '../out/distCommonJs/core/fileSystemAdapter';
+import { util } from '../out/distCommonJs/core/util/util';
 
+let fileSystem: VsCodeNodeJsFileSystemAdapter
 let mapPanel: vscode.WebviewPanel|undefined = undefined
+let fileExplorerInterval: NodeJS.Timer|undefined = undefined // TODO: this is a hack, find better solution
+let latestFileExplorerSelection: string|undefined = undefined
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
+	fileSystem = new VsCodeNodeJsFileSystemAdapter(context.extensionUri)
 	const openMapDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.mammutmap', () => {
 		createOrRevealMapPanel(context)
 	})
 	context.subscriptions.push(openMapDisposable)
 
 	const flyToPathDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.flyToPath', async (data) => {
-		console.log(data.path)
 		if (!data || !data.path || typeof data.path !== 'string') {
 			vscode.window.showErrorMessage(`mammutmap.flyToPath called without data.path, data is ${data}`)
 		}
 		const mapPanel: vscode.WebviewPanel = await createOrRevealMapPanel(context)
-		let path: string = data.path
-		if (path.startsWith('/c:/')) {
-			path = path.replace('/c:/', 'c:/')
-		} else {
-			vscode.window.showWarningMessage(`mammutmap.flyToPath expected data.path '${data}' to start with '/c:/'.`)
-		}
-		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [path]})
+		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath(data.path)]})
 	})
 	context.subscriptions.push(flyToPathDisposable)
 }
@@ -59,13 +58,14 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 			return
 		}
 		try {
-			const fileSystem = new VsCodeNodeJsFileSystemAdapter(context.extensionUri)
 			const result = await (fileSystem as any)[message.command](...message.parameters)
 			mapPanel.webview.postMessage({id: message.id, result})
 		} catch(error: any) {
 			mapPanel.webview.postMessage({id: message.id, error: error.toString()}) // TODO: also send stacktrace?
 		}
 	})
+	updateFileExplorerInterval()
+	mapPanel.onDidChangeViewState(() => updateFileExplorerInterval())
 	mapPanel.onDidDispose(() => mapPanel = undefined)
 	return promise.get()
 }
@@ -92,6 +92,55 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): s
 		<div id="unplacedElements" style="display:none;"></div>
 	  </body>
 	</html>`
+}
+
+function normalizePath(path: string): string {
+	// TODO: make implementation dependent on how fileSystem.extensionUri looks
+	if (path.startsWith('/c:/')) {
+		path = path.replace('/c:/', 'c:/')
+	} else if (path.startsWith('C:\\')) {
+		path = path.replace('C:\\', 'c:/')
+	} else {
+		vscode.window.showWarningMessage(`normalizePath expected path '${path}' to start with '/c:/' or 'C:\\'.`)
+	}
+	return (util as any).replaceBackslashesWithSlashes(path)
+}
+
+function updateFileExplorerInterval(): void {
+	if (mapPanel && mapPanel.visible) {
+		if (fileExplorerInterval) {
+			return
+		}
+		fileExplorerInterval = setInterval(async () => {
+			const path: string|undefined = await getFileExplorerSelection()
+			if (path === latestFileExplorerSelection) {
+				return
+			}
+			latestFileExplorerSelection = path
+			if (!path) {
+				return
+			}
+			const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath(path))
+			if (stats && !stats.isFile()) {
+				mapPanel!.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath(path)]})
+			}
+		}, 100)
+	} else {
+		clearInterval(fileExplorerInterval)
+		fileExplorerInterval = undefined
+	}
+}
+
+async function getFileExplorerSelection(): Promise<string|undefined> {
+	// TODO: this is a hack, find better solution
+	const clipboardContentToRestore: string = await vscode.env.clipboard.readText()
+	await vscode.commands.executeCommand('copyFilePath')
+	const path: string = await vscode.env.clipboard.readText()
+	vscode.env.clipboard.writeText(clipboardContentToRestore)
+	if (path === '' || path.startsWith('webview-panel')) {
+		return undefined
+	}
+	return path
 }
 
 // This method is called when your extension is deactivated
