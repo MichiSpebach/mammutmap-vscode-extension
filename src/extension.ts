@@ -103,7 +103,7 @@ function normalizePath(path: string): string {
 	} else {
 		vscode.window.showWarningMessage(`normalizePath expected path '${path}' to start with '/c:/' or 'C:\\'.`)
 	}
-	return (util as any).replaceBackslashesWithSlashes(path)
+	return util.replaceBackslashesWithSlashes(path)
 }
 
 function updateFileExplorerInterval(): void {

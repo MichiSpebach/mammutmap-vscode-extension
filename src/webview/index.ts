@@ -25,7 +25,7 @@ async function init(): Promise<void> {
     mainWidget.render()
     commandLine.init()
     contextMenu.init(new HtmlContextMenuPopup())
-    await applicationMenu.initAndRender(new HtmlApplicationMenu())
+    await applicationMenu.initAndRender(new HtmlApplicationMenu({hideFileMenu: true}))
     await pluginLoader.loadPlugins()
     await map.searchAndLoadMapCloseTo(await fileSystem.getWorkspaceFolderPath())
     messageBroker.postMessage('greet', ['Mammutmap initialized'])
