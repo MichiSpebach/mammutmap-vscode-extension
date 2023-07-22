@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
 import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager';
 import { Stats } from '../out/distCommonJs/core/fileSystemAdapter';
-import { util } from '../out/distCommonJs/core/util/util';
+import * as util from './util'
 
 let fileSystem: VsCodeNodeJsFileSystemAdapter
 let mapPanel: vscode.WebviewPanel|undefined = undefined
@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 			vscode.window.showErrorMessage(`mammutmap.flyToPath called without data.path, data is ${data}`)
 		}
 		const mapPanel: vscode.WebviewPanel = await createOrRevealMapPanel(context)
-		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath(data.path)]})
+		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [util.normalizePath(data.path)]})
 	})
 	context.subscriptions.push(flyToPathDisposable)
 }
@@ -94,18 +94,6 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): s
 	</html>`
 }
 
-function normalizePath(path: string): string {
-	// TODO: make implementation dependent on how fileSystem.extensionUri looks
-	if (path.startsWith('/c:/')) {
-		path = path.replace('/c:/', 'c:/')
-	} else if (path.startsWith('C:\\')) {
-		path = path.replace('C:\\', 'c:/')
-	} else {
-		vscode.window.showWarningMessage(`normalizePath expected path '${path}' to start with '/c:/' or 'C:\\'.`)
-	}
-	return util.replaceBackslashesWithSlashes(path)
-}
-
 function updateFileExplorerInterval(): void {
 	if (mapPanel && mapPanel.visible) {
 		if (fileExplorerInterval) {
@@ -120,9 +108,10 @@ function updateFileExplorerInterval(): void {
 			if (!path) {
 				return
 			}
-			const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath(path))
+			const normalizePath = util.normalizePath(path)
+			const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath)
 			if (stats && !stats.isFile()) {
-				mapPanel!.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath(path)]})
+				mapPanel!.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]})
 			}
 		}, 100)
 	} else {

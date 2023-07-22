@@ -1,6 +1,7 @@
 import { log } from '../../out/dist/core/logService.js'
 import { map } from '../../out/dist/core/Map.js'
 
+/* eslint-disable @typescript-eslint/naming-convention */
 interface vscode {
     postMessage(message: any): void
 }
