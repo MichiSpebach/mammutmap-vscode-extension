@@ -1,14 +1,19 @@
 {
   "name": "mammutmap",
   "displayName": "Mammutmap",
-  "description": "",
-  "version": "0.7.0",
+  "description": "Visualize the source code of your entire project. Zoom out to get the rough structure, zoom in as deep as you want to get the details at an appropriate level.",
+  "publisher": "mammutmap",
+  "version": "0.8.0",
   "engines": {
     "vscode": "^1.78.0"
   },
   "categories": [
-    "Other"
+    "Visualization"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MichiSpebach/mammutmap-vscode-extension"
+  },
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {

@@ -1080,6 +1080,44 @@
 			"tags": [
 				"library"
 			]
+		},
+		{
+			"id": "ktsfp40pquo",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 18,
+						"y": 18
+					},
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "j9tsvr2akr8",
+						"boxName": "workaround",
+						"x": 50,
+						"y": 50
+					},
+					{
+						"boxId": "4kjt6ocgh3o",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"falsePositive"
+			]
 		}
 	],
 	"nodes": [],
@@ -1088,7 +1126,7 @@
 	"linkTags": [
 		{
 			"name": "falsePositive",
-			"count": 2,
+			"count": 4,
 			"appearance": {
 				"mode": "notRendered"
 			}

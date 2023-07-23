@@ -9,7 +9,7 @@ import * as contextMenu from '../../out/dist/core/contextMenu.js'
 import { DirectDomAdapter } from '../../out/dist/browserApp/DirectDomAdapter.js'
 import { HtmlApplicationMenu } from '../../out/dist/core/applicationMenu/HtmlApplicationMenu.js'
 import { HtmlContextMenuPopup } from '../../out/dist/browserApp/HtmlContextMenuPopup.js'
-import { util } from '../../out/dist/core/util/util.js'
+import { log } from '../../out/dist/core/logService.js'
 import { MessageSendingFileSystemAdapter } from './MessageSendingFileSystemAdapter.js'
 import * as map from '../../out/dist/core/Map.js'
 import * as messageBroker from './messageBroker.js'
@@ -17,6 +17,10 @@ import * as messageBroker from './messageBroker.js'
 init()
 
 async function init(): Promise<void> {
+    window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+      log.errorWithoutThrow(event.reason)
+    })
+
     //processing.init(new BrowserProcessingAdapter()) TODO
     domAdapter.init(new DirectDomAdapter())
     const fileSystem = new MessageSendingFileSystemAdapter()
@@ -30,7 +34,3 @@ async function init(): Promise<void> {
     await map.searchAndLoadMapCloseTo(await fileSystem.getWorkspaceFolderPath())
     messageBroker.postMessage('greet', ['Mammutmap initialized'])
 }
-
-window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
-  util.logErrorWithoutThrow(event.reason)
-})
