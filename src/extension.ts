@@ -65,8 +65,11 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 		}
 	})
 	updateFileExplorerInterval()
-	mapPanel.onDidChangeViewState(() => updateFileExplorerInterval())
+	const onChangeViewState: vscode.Disposable = mapPanel.onDidChangeViewState(() => updateFileExplorerInterval())
+	const onChangeWindowState: vscode.Disposable = vscode.window.onDidChangeWindowState(() => updateFileExplorerInterval())
 	mapPanel.onDidDispose(() => {
+		onChangeViewState.dispose()
+		onChangeWindowState.dispose()
 		mapPanel = undefined
 		updateFileExplorerInterval()
 	})
@@ -98,34 +101,54 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): s
 }
 
 function updateFileExplorerInterval(): void {
-	if (mapPanel && mapPanel.visible) {
-		if (fileExplorerInterval) {
+	if (mapPanel && mapPanel.visible && vscode.window.state.focused) {
+		setFileExplorerInterval()
+	} else {
+		clearFileExplorerInterval()
+	}
+}
+
+function setFileExplorerInterval(): void {
+	if (fileExplorerInterval) {
+		vscode.window.showWarningMessage('trying to set fileExplorerInterval but is already active.')
+		return
+	}
+	fileExplorerInterval = setInterval(async () => {
+		if (!vscode.window.state.focused) {
+			vscode.window.showWarningMessage('fileExplorerInterval is active although window is not focused, clearing fileExplorerInterval.')
+			clearFileExplorerInterval();
 			return
 		}
-		fileExplorerInterval = setInterval(async () => {
-			if (!mapPanel || !mapPanel.visible) {
-				vscode.window.showWarningMessage('fileExplorerInterval is active although mapPanel is not, clearing fileExplorerInterval.')
-				clearInterval(fileExplorerInterval)
-				fileExplorerInterval = undefined
-				return
-			}
-			const path: string|undefined = await getFileExplorerSelection()
-			if (path === latestFileExplorerSelection) {
-				return
-			}
-			latestFileExplorerSelection = path
-			if (!path) {
-				return
-			}
-			const normalizePath = util.normalizePath(path)
-			const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath)
-			if (stats && !stats.isFile()) {
-				mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]})
-			}
-		}, 100)
-	} else {
-		clearInterval(fileExplorerInterval)
-		fileExplorerInterval = undefined
+		if (!mapPanel || !mapPanel.visible) {
+			vscode.window.showWarningMessage('fileExplorerInterval is active although mapPanel is not, clearing fileExplorerInterval.')
+			clearFileExplorerInterval()
+			return
+		}
+		updateLatestFileExplorerSelection(mapPanel)
+	}, 100)
+}
+
+function clearFileExplorerInterval(): void {
+	if (!fileExplorerInterval) {
+		return
+	}
+	clearInterval(fileExplorerInterval)
+	fileExplorerInterval = undefined
+}
+
+async function updateLatestFileExplorerSelection(mapPanel: vscode.WebviewPanel): Promise<void> {
+	const path: string|undefined = await getFileExplorerSelection()
+	if (path === latestFileExplorerSelection) {
+		return
+	}
+	latestFileExplorerSelection = path
+	if (!path) {
+		return
+	}
+	const normalizePath = util.normalizePath(path)
+	const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath)
+	if (stats && !stats.isFile()) {
+		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]})
 	}
 }
 

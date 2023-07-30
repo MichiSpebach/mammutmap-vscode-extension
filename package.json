@@ -3,7 +3,7 @@
   "displayName": "Mammutmap",
   "description": "Visualize the source code of your entire project. Zoom out to get the rough structure, zoom in as deep as you want to get the details at an appropriate level.",
   "publisher": "mammutmap",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "engines": {
     "vscode": "^1.78.0"
   },
