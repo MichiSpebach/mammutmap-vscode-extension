@@ -5,6 +5,8 @@ import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
 import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager';
 import { Stats } from '../out/distCommonJs/core/fileSystemAdapter';
 import * as util from './util'
+import { RequestMessage } from './sharedCommonJs/RequestMessage';
+import { ResponseMessage } from './sharedCommonJs/ResponseMessage';
 
 let fileSystem: VsCodeNodeJsFileSystemAdapter
 let mapPanel: vscode.WebviewPanel|undefined = undefined
@@ -25,7 +27,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 			vscode.window.showErrorMessage(`mammutmap.flyToPath called without data.path, data is ${data}`)
 		}
 		const mapPanel: vscode.WebviewPanel = await createOrRevealMapPanel(context)
-		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [util.normalizePath(data.path)]})
+		mapPanel.webview.postMessage(new RequestMessage({target: 'map', command: 'flyTo', parameters: [util.normalizePath(data.path)]}))
 	})
 	context.subscriptions.push(flyToPathDisposable)
 }
@@ -58,10 +60,10 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 			return
 		}
 		try {
-			const result = await (fileSystem as any)[message.command](...message.parameters)
-			mapPanel.webview.postMessage({id: message.id, result})
-		} catch(error: any) {
-			mapPanel.webview.postMessage({id: message.id, error: error.toString()}) // TODO: also send stacktrace?
+			const result: unknown = await (fileSystem as any)[message.command](...message.parameters)
+			mapPanel.webview.postMessage(ResponseMessage.newSuccess({id: message.id, result: result ?? {}}))
+		} catch(error: unknown) {
+			mapPanel.webview.postMessage(ResponseMessage.newFailure({id: message.id, error: error?.toString() ?? 'unknown error'})) // TODO: also send stacktrace?
 		}
 	})
 	updateFileExplorerInterval()
@@ -148,7 +150,7 @@ async function updateLatestFileExplorerSelection(mapPanel: vscode.WebviewPanel):
 	const normalizePath = util.normalizePath(path)
 	const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath)
 	if (stats && !stats.isFile()) {
-		mapPanel.webview.postMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]})
+		mapPanel.webview.postMessage(new RequestMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]}))
 	}
 }
 
