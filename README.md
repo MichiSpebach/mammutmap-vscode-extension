@@ -7,7 +7,7 @@ Mammutmap scales extremely well and can handle huge projects.
 This is an early version but I am working frequently on improving it.
 
 ### Feedback and contributions are welcome
-https://github.com/MichiSpebach/mammutmap/issues\
+https://github.com/MichiSpebach/mammutmap/issues \
 Also as Mammutmap is written in TypeScript it is very simple to write plugins for it.
 
 Navigation works with scroll wheel, double click or selecting folders in explorer:\
