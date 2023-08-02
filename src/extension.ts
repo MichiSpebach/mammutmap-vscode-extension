@@ -112,7 +112,8 @@ function updateFileExplorerInterval(): void {
 
 function setFileExplorerInterval(): void {
 	if (fileExplorerInterval) {
-		vscode.window.showWarningMessage('trying to set fileExplorerInterval but is already active.')
+		// this happens sometimes onDidChangeViewState or onDidChangeWindowState seem to fire spontaneously sometimes
+		//vscode.window.showWarningMessage('trying to set fileExplorerInterval but is already active.')
 		return
 	}
 	fileExplorerInterval = setInterval(async () => {
