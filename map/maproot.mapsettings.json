@@ -928,13 +928,13 @@
 					{
 						"boxId": "g4e1oheuieg",
 						"boxName": "src",
-						"x": 45.2,
-						"y": 25.2
+						"x": 85.76,
+						"y": 48.16
 					},
 					{
 						"boxId": "oha6ji1ljg",
 						"boxName": "shared",
-						"x": 26,
+						"x": 74,
 						"y": 26
 					},
 					{
@@ -1232,6 +1232,124 @@
 			"tags": [
 				"falsePositive"
 			]
+		},
+		{
+			"id": "b4ub9184rfo",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 48.32,
+						"y": 28.72
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 16.12,
+						"y": 34.52
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 58,
+						"y": 18
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 90,
+						"y": 50
+					},
+					{
+						"boxId": "igkjsvthhp8",
+						"boxName": "Map.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "d5t5lcmp34",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 48.32,
+						"y": 28.72
+					},
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.749,
+						"y": 35.667
+					},
+					{
+						"boxId": "0sp7pk00p6o",
+						"boxName": "dist",
+						"x": 48.208,
+						"y": 26.192
+					},
+					{
+						"boxId": "fvjam4na4qo",
+						"boxName": "core",
+						"x": 41.04,
+						"y": 90.96
+					},
+					{
+						"boxId": "i2ige5mhre",
+						"boxName": "util",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "905lo0bjmr",
+						"boxName": "util.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
 		}
 	],
 	"nodes": [],
@@ -1254,14 +1372,14 @@
 		},
 		{
 			"name": "message passing",
-			"count": 1,
+			"count": 2,
 			"appearance": {
 				"color": "magenta"
 			}
 		},
 		{
 			"name": "library",
-			"count": 19,
+			"count": 21,
 			"appearance": {
 				"mode": "visibleEnds"
 			}
@@ -1274,5 +1392,7 @@
 			}
 		}
 	],
-	"defaultLinkAppearance": {}
+	"defaultLinkAppearance": {
+		"mode": "visible"
+	}
 }

@@ -166,7 +166,7 @@
 					{
 						"boxId": "oha6ji1ljg",
 						"boxName": "shared",
-						"x": 26,
+						"x": 74,
 						"y": 26
 					},
 					{
@@ -245,13 +245,13 @@
 						"boxId": "5o04ebn2ra8",
 						"boxName": "webview",
 						"x": 26,
-						"y": 74
+						"y": 73.44
 					},
 					{
 						"boxId": "81f3ukvcabg",
 						"boxName": "messageBroker.ts",
 						"x": 50,
-						"y": 50
+						"y": 48
 					}
 				],
 				"floatToBorder": true
@@ -259,10 +259,10 @@
 			"to": {
 				"path": [
 					{
-						"boxId": "ee45gdt4s0o",
-						"boxName": "VsCodeNodeJsFileSystemAdapter.ts",
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
 						"x": 50,
-						"y": 50
+						"y": 48
 					}
 				],
 				"floatToBorder": true
@@ -345,6 +345,110 @@
 					}
 				]
 			}
+		},
+		{
+			"id": "lrm90sogne",
+			"from": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "oha6ji1ljg",
+						"boxName": "shared",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "eh2bfs21c5g",
+						"boxName": "RequestMessage.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "nkcds0kud4",
+			"from": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "oha6ji1ljg",
+						"boxName": "shared",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "fmfsnc96eqo",
+						"boxName": "ResponseMessage.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "b13l385bjso",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 52
+					}
+				],
+				"floatToBorder": true
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "5o04ebn2ra8",
+						"boxName": "webview",
+						"x": 26,
+						"y": 75.68
+					},
+					{
+						"boxId": "81f3ukvcabg",
+						"boxName": "messageBroker.ts",
+						"x": 50,
+						"y": 56
+					}
+				],
+				"floatToBorder": true
+			},
+			"tags": [
+				"message passing"
+			]
 		}
 	],
 	"nodes": [
