@@ -10,7 +10,10 @@ This is an early version but I am working frequently on improving it.
 https://github.com/MichiSpebach/mammutmap/issues \
 Also as Mammutmap is written in TypeScript it is very simple to write plugins for it.
 
-Navigation works with scroll wheel, double click or selecting folders in explorer:\
+Right click on folder and click "Show in Mammutmap" to open:\
+![](./resources/showInMammutmap.png)
+
+Navigation works with scroll wheel, double click or selecting folders in explorer (while Mammutmap is visible):\
 ![](./resources/navigation.gif)
 
 Generating links works manually (right click) or with a link generation plugin (also accessible via right click):\
