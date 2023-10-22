@@ -3,12 +3,15 @@
 import * as vscode from 'vscode';
 import { VsCodeNodeJsFileSystemAdapter } from './VsCodeNodeJsFileSystemAdapter';
 import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager';
-import { Stats } from '../out/distCommonJs/core/fileSystemAdapter';
+import { FileSystemAdapter, Stats } from '../out/distCommonJs/core/fileSystemAdapter';
 import * as util from './util'
 import { RequestMessage } from './sharedCommonJs/RequestMessage';
 import { ResponseMessage } from './sharedCommonJs/ResponseMessage';
+import { VsCodeEnvironmentAdapter } from './VsCodeEnvironmentAdapter';
+import { EnvironmentAdapter } from '../out/distCommonJs/core/environmentAdapter';
 
-let fileSystem: VsCodeNodeJsFileSystemAdapter
+let environment: EnvironmentAdapter
+let fileSystem: FileSystemAdapter
 let mapPanel: vscode.WebviewPanel|undefined = undefined
 let fileExplorerInterval: NodeJS.Timer|undefined = undefined // TODO: this is a hack, find better solution
 let latestFileExplorerSelection: string|undefined = undefined
@@ -16,6 +19,7 @@ let latestFileExplorerSelection: string|undefined = undefined
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
+	environment = new VsCodeEnvironmentAdapter()
 	fileSystem = new VsCodeNodeJsFileSystemAdapter(context.extensionUri)
 	const openMapDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.mammutmap', () => {
 		createOrRevealMapPanel(context)
@@ -49,21 +53,55 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 		vscode.window.showWarningMessage(`createOrRevealMapPanel Mammutmap did not greet within 5 seconds.`)
 		promise.run()
 	}, 5000)
-	mapPanel.webview.onDidReceiveMessage(async message => {
+	mapPanel.webview.onDidReceiveMessage(async (rawMessage: Object) => {
 		if (!mapPanel) {
-			vscode.window.showWarningMessage(`mapPanel.webview.onDidReceiveMessage called while mapPanel is '${mapPanel}', received message is '${message}'.`)
+			vscode.window.showWarningMessage(`mapPanel.webview.onDidReceiveMessage called while mapPanel is '${mapPanel}', received message is '${rawMessage}'.`)
 			return
 		}
-		if (message.command === 'greet') {
+		if ((rawMessage as RequestMessage).command === 'greet') {
 			clearTimeout(timeout)
 			promise.run()
 			return
 		}
-		try {
-			const result: unknown = await (fileSystem as any)[message.command](...message.parameters)
-			mapPanel.webview.postMessage(ResponseMessage.newSuccess({id: message.id, result: result ?? {}}))
-		} catch(error: unknown) {
-			mapPanel.webview.postMessage(ResponseMessage.newFailure({id: message.id, error: error?.toString() ?? 'unknown error'})) // TODO: also send stacktrace?
+
+		const message = RequestMessage.ofRawObject(rawMessage)
+		const errors: string[] = []
+		const id: string|undefined = message.id ?? (() => {
+			errors.push(`message has no id`)
+			return 'noIdProvided'
+		})()
+		switch (message.target) {
+			case 'fileSystem':
+				try {
+					const result: unknown = await (fileSystem as any)[message.command](...message.parameters)
+					mapPanel.webview.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
+				} catch(error: unknown) {
+					errors.push(error?.toString() ?? 'unknown fileSystem error')
+					mapPanel.webview.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
+				}
+				return
+			case 'environment':
+				try {
+					const result: unknown = await (environment as any)[message.command](...message.parameters)
+					mapPanel.webview.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
+				} catch(error: unknown) {
+					errors.push(error?.toString() ?? 'unknown environment error')
+					mapPanel.webview.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
+				}
+				return
+			default:
+				errors.push(`unsupported message.target '${message.target}'`)
+				mapPanel.webview.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
+				return
+		}
+		function buildErrorMessageIfExistent(errors: string[]): string|undefined {
+			if (errors.length === 0) {
+				return undefined
+			}
+			return buildErrorMessage(errors)
+		}
+		function buildErrorMessage(errors: string[]): string {
+			return `mapPanel.webview.onDidReceiveMessage failed: ${errors.join(', ')}; received message is '${JSON.stringify(message)}'.`
 		}
 	})
 	updateFileExplorerInterval()
@@ -93,10 +131,6 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): s
 	  </head>
 	  <body id="body" style="position:absolute;width:100%;height:100%;max-width:100%;padding:0px;">
 		<div id="content"></div>
-		<div id="terminal" class="terminal">
-		  <div id="log" style="margin-bottom:15px;"></div>
-		  <input id="commandLine" style="position:absolute;bottom:0px;width:95%;" class="commandLine">
-		</div>
 		<div id="unplacedElements" style="display:none;"></div>
 	  </body>
 	</html>`

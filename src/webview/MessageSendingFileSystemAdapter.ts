@@ -11,18 +11,19 @@ import {
 import { log } from '../../out/dist/core/logService.js'
 import * as messageBroker from './messageBroker.js'
 import { VsCodeFileSystemAdapter } from '../shared/VsCodeFileSystemAdapter.js'
+import { RequestMessage } from '../shared/RequestMessage.js'
 
 export class MessageSendingFileSystemAdapter extends VsCodeFileSystemAdapter {
     public async doesDirentExistAndIsFile(path: string): Promise<boolean> {
-        return messageBroker.postMessage(this.doesDirentExistAndIsFile.name, path)
+        return this.postMessage(this.doesDirentExistAndIsFile.name, path)
     }
 
     public doesDirentExist(path: string): Promise<boolean> {
-        return messageBroker.postMessage(this.doesDirentExist.name, path)
+        return this.postMessage(this.doesDirentExist.name, path)
     }
 
     public async getDirentStatsIfExists(path: string): Promise<Stats | null> {
-        const stats: Stats|null = await messageBroker.postMessage(this.getDirentStatsIfExists.name, path)
+        const stats: Stats|null = await this.postMessage(this.getDirentStatsIfExists.name, path)
         if (!stats) {
             return null
         }
@@ -30,7 +31,7 @@ export class MessageSendingFileSystemAdapter extends VsCodeFileSystemAdapter {
     }
 
     public async getDirentStatsOrThrow(path: string): Promise<Stats> {
-        const stats: Stats = await messageBroker.postMessage(this.getDirentStatsOrThrow.name, path)
+        const stats: Stats = await this.postMessage(this.getDirentStatsOrThrow.name, path)
         return this.buildStatsFromMessage(stats, path)
     }
 
@@ -47,7 +48,7 @@ export class MessageSendingFileSystemAdapter extends VsCodeFileSystemAdapter {
     }
 
     public async readdir(path: string): Promise<Dirent[]> {
-        const dirents = await messageBroker.postMessage(this.readdir.name, path)
+        const dirents = await this.postMessage(this.readdir.name, path)
         dirents.forEach((dirent: Dirent) => {
             Object.setPrototypeOf(dirent, DirentBasicImpl.prototype)
         });
@@ -55,7 +56,7 @@ export class MessageSendingFileSystemAdapter extends VsCodeFileSystemAdapter {
     }
     
     public readFile(path: string): Promise<string> {
-        return messageBroker.postMessage(this.readFile.name, path)
+        return this.postMessage(this.readFile.name, path)
     }
 
     public readFileSync(path: string): string {
@@ -63,27 +64,31 @@ export class MessageSendingFileSystemAdapter extends VsCodeFileSystemAdapter {
     }
 
     public writeFile(path: string, data: string, options?: { throwInsteadOfWarn?: boolean | undefined; } | undefined): Promise<void> {
-        return messageBroker.postMessage(this.writeFile.name, path, data, options)
+        return this.postMessage(this.writeFile.name, path, data, options)
     }
 
     public makeFolder(path: string): Promise<void> {
-        return messageBroker.postMessage(this.makeFolder.name, path)
+        return this.postMessage(this.makeFolder.name, path)
     }
 
     public symlink(existingPath: string, newPath: string, type?: 'dir' | 'file' | 'junction' | undefined): Promise<void> {
-        return messageBroker.postMessage(this.symlink.name, existingPath, newPath, type)
+        return this.postMessage(this.symlink.name, existingPath, newPath, type)
     }
 
     public rename(oldPath: string, newPath: string): Promise<void> {
-        return messageBroker.postMessage(this.rename.name, oldPath, newPath)
+        return this.postMessage(this.rename.name, oldPath, newPath)
     }
 
     public showOpenDialog(options: OpenDialogOptions): Promise<OpenDialogReturnValue> {
-        return messageBroker.postMessage(this.showOpenDialog.name, options)
+        return this.postMessage(this.showOpenDialog.name, options)
     }
 
     public getWorkspaceFolderPath(): Promise<string> {
-        return messageBroker.postMessage(this.getWorkspaceFolderPath.name)
+        return this.postMessage(this.getWorkspaceFolderPath.name)
+    }
+
+    private postMessage(command: string, ...parameters: any[]): Promise<any> {
+        return messageBroker.postRequestMessage(new RequestMessage({target: 'fileSystem', command, parameters}))
     }
 
 }

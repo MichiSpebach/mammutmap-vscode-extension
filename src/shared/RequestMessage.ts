@@ -1,6 +1,6 @@
 export class RequestMessage {
     public readonly id: string|undefined
-    public readonly target: 'fileSystem'|'map'
+    public readonly target: 'fileSystem'|'environment'|'map'
     public readonly command: string
     public readonly parameters: Object[]
 
@@ -14,7 +14,7 @@ export class RequestMessage {
         return request
     }
 
-    public constructor(options: {id?: string, target: 'fileSystem'|'map', command: string, parameters: string[]}) {
+    public constructor(options: {id?: string, target: 'fileSystem'|'environment'|'map', command: string, parameters: string[]}) {
         this.id = options.id
         this.target = options.target
         this.command = options.command
@@ -24,8 +24,8 @@ export class RequestMessage {
     private validate(): void {
         if (!this.target) {
             console.warn('RequestMessage::validate() target is not set.')
-        } else if (!['fileSystem', 'map'].includes(this.target)) {
-            console.warn(`RequestMessage::validate() expected target to be in ['fileSystem', 'map'] but is '${this.target}.`)
+        } else if (!['fileSystem', 'environment', 'map'].includes(this.target)) {
+            console.warn(`RequestMessage::validate() expected target to be in ['fileSystem', 'environment', 'map'] but is '${this.target}.`)
         }
         if (!this.command) {
             console.warn('RequestMessage::validate() command is not set.')

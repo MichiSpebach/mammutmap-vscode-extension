@@ -32,7 +32,11 @@ window.addEventListener('message', event => {
     }
 })
 
-export function postMessage(command: string, ...parameters: any[]): Promise<any> {
+export function postRequestMessage(message: RequestMessage) {
+    return postMessage(message)
+}
+
+export function postMessage(message: {target?: string, command: string, parameters: any[]}): Promise<any> {
     const id: string = (nextId++).toString()
     let resolve: (value: any) => void = () => {}
     let reject: (value: any) => void = () => {}
@@ -40,7 +44,8 @@ export function postMessage(command: string, ...parameters: any[]): Promise<any>
         resolve = res
         reject = rej
     })
-    vscode.postMessage({id, command, parameters})
+    ;(message as any).id = id // 'as any' because id is readonly, TODO refactor
+    vscode.postMessage(message)
     ongoingPromises.set(id, {resolve, reject})
     return promise
 }
