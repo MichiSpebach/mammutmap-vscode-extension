@@ -27,24 +27,24 @@ export class MessageBroker {
 			case 'fileSystem':
 				try {
 					const result: unknown = await (fileSystem as any)[message.command](...message.parameters)
-					this.webview.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
+					this.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
 				} catch(error: unknown) {
 					errors.push(error?.toString() ?? 'unknown fileSystem error')
-					this.webview.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
+					this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
 				}
 				return
 			case 'environment':
 				try {
 					const result: unknown = await (environment as any)[message.command](...message.parameters)
-					this.webview.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
+					this.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
 				} catch(error: unknown) {
 					errors.push(error?.toString() ?? 'unknown environment error')
-					this.webview.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
+					this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
 				}
 				return
 			default:
 				errors.push(`unsupported message.target '${message.target}'`)
-				this.webview.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
+				this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
 				return
 		}
 		
@@ -58,5 +58,9 @@ export class MessageBroker {
 		function buildErrorMessage(errors: string[]): string {
 			return `mapPanel.webview.onDidReceiveMessage failed: ${errors.join(', ')}; received message is '${JSON.stringify(message)}'.`
 		}
+	}
+
+	public async postMessage(message: RequestMessage|ResponseMessage): Promise<void> {
+		await this.webview.postMessage(message)
 	}
 }

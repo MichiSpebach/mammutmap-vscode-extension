@@ -10,7 +10,12 @@ import { MessageBroker } from './MessageBroker'
 import * as setup from './setup'
 import { fileSystem } from './setup';
 
-let mapPanel: vscode.WebviewPanel|undefined = undefined
+type MapTab = {
+	panel: vscode.WebviewPanel
+	messageBroker: MessageBroker
+}
+
+let mapTab: MapTab|undefined = undefined
 let fileExplorerInterval: NodeJS.Timer|undefined = undefined // TODO: this is a hack, find better solution
 let latestFileExplorerSelection: string|undefined = undefined
 
@@ -20,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 	setup.initEnvironment(new VsCodeEnvironmentAdapter())
 	setup.initFileSystem(new VsCodeNodeJsFileSystemAdapter(context.extensionUri))
 	const openMapDisposable: vscode.Disposable = vscode.commands.registerCommand('mammutmap.mammutmap', () => {
-		createOrRevealMapPanel(context)
+		createOrRevealMapTab(context)
 	})
 	context.subscriptions.push(openMapDisposable)
 
@@ -28,33 +33,35 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 		if (!data || !data.path || typeof data.path !== 'string') {
 			vscode.window.showErrorMessage(`mammutmap.flyToPath called without data.path, data is ${data}`)
 		}
-		const mapPanel: vscode.WebviewPanel = await createOrRevealMapPanel(context)
-		mapPanel.webview.postMessage(new RequestMessage({target: 'map', command: 'flyTo', parameters: [util.normalizePath(data.path)]}))
+		const mapTab: MapTab = await createOrRevealMapTab(context)
+		mapTab.messageBroker.postMessage(new RequestMessage({target: 'map', command: 'flyTo', parameters: [util.normalizePath(data.path)]}))
 	})
 	context.subscriptions.push(flyToPathDisposable)
 }
 
-async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise<vscode.WebviewPanel> {
-	if (mapPanel) {
-		mapPanel.reveal()
-		return mapPanel
+async function createOrRevealMapTab(context: vscode.ExtensionContext): Promise<MapTab> {
+	if (mapTab) {
+		mapTab.panel.reveal()
+		return mapTab
 	}
 	
-	mapPanel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
+	const panel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
 		enableScripts: true,
 		localResourceRoots: [vscode.Uri.file(context.extensionPath)],
 		retainContextWhenHidden: true
 	})
-	mapPanel.webview.html = getWebviewContent(mapPanel.webview, context.extensionUri)
-	const webviewMessageBroker = new MessageBroker(mapPanel.webview)
-	mapPanel.webview.onDidReceiveMessage((message: Object) => webviewMessageBroker.processMessage(RequestMessage.ofRawObject(message)))
+	panel.webview.html = getWebviewContent(panel.webview, context.extensionUri)
+	const messageBroker = new MessageBroker(panel.webview)
+	mapTab = {panel, messageBroker}
+
+	mapTab.panel.webview.onDidReceiveMessage((message: Object) => messageBroker.processMessage(RequestMessage.ofRawObject(message)))
 	updateFileExplorerInterval()
-	const onChangeViewState: vscode.Disposable = mapPanel.onDidChangeViewState(() => updateFileExplorerInterval())
+	const onChangeViewState: vscode.Disposable = mapTab.panel.onDidChangeViewState(() => updateFileExplorerInterval())
 	const onChangeWindowState: vscode.Disposable = vscode.window.onDidChangeWindowState(() => updateFileExplorerInterval())
-	mapPanel.onDidDispose(() => {
+	mapTab.panel.onDidDispose(() => {
 		onChangeViewState.dispose()
 		onChangeWindowState.dispose()
-		mapPanel = undefined
+		mapTab = undefined
 		updateFileExplorerInterval()
 	})
 
@@ -63,11 +70,11 @@ async function createOrRevealMapPanel(context: vscode.ExtensionContext): Promise
 			vscode.window.showWarningMessage(`createOrRevealMapPanel Mammutmap did not greet within 5 seconds.`)
 			resolve()
 		}, 5000)
-		await webviewMessageBroker.greetingFromWebview.get()
+		await messageBroker.greetingFromWebview.get()
 		clearTimeout(timeout)
 		resolve()
 	})
-	return mapPanel
+	return mapTab
 }
 
 function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): string {
@@ -91,7 +98,7 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): s
 }
 
 function updateFileExplorerInterval(): void {
-	if (mapPanel && mapPanel.visible && vscode.window.state.focused) {
+	if (mapTab && mapTab.panel.visible && vscode.window.state.focused) {
 		setFileExplorerInterval()
 	} else {
 		clearFileExplorerInterval()
@@ -104,19 +111,7 @@ function setFileExplorerInterval(): void {
 		//vscode.window.showWarningMessage('trying to set fileExplorerInterval but is already active.')
 		return
 	}
-	fileExplorerInterval = setInterval(async () => {
-		if (!vscode.window.state.focused) {
-			vscode.window.showWarningMessage('fileExplorerInterval is active although window is not focused, clearing fileExplorerInterval.')
-			clearFileExplorerInterval();
-			return
-		}
-		if (!mapPanel || !mapPanel.visible) {
-			vscode.window.showWarningMessage('fileExplorerInterval is active although mapPanel is not, clearing fileExplorerInterval.')
-			clearFileExplorerInterval()
-			return
-		}
-		updateLatestFileExplorerSelection(mapPanel)
-	}, 100)
+	fileExplorerInterval = setInterval(updateLatestFileExplorerSelection, 100)
 }
 
 function clearFileExplorerInterval(): void {
@@ -127,7 +122,18 @@ function clearFileExplorerInterval(): void {
 	fileExplorerInterval = undefined
 }
 
-async function updateLatestFileExplorerSelection(mapPanel: vscode.WebviewPanel): Promise<void> {
+async function updateLatestFileExplorerSelection(): Promise<void> {
+	if (!vscode.window.state.focused) {
+		vscode.window.showWarningMessage('fileExplorerInterval is active although window is not focused, clearing fileExplorerInterval.')
+		clearFileExplorerInterval();
+		return
+	}
+	if (!mapTab || !mapTab.panel.visible) {
+		vscode.window.showWarningMessage('fileExplorerInterval is active although mapPanel is not, clearing fileExplorerInterval.')
+		clearFileExplorerInterval()
+		return
+	}
+
 	const path: string|undefined = await getFileExplorerSelection()
 	if (path === latestFileExplorerSelection) {
 		return
@@ -139,7 +145,7 @@ async function updateLatestFileExplorerSelection(mapPanel: vscode.WebviewPanel):
 	const normalizePath = util.normalizePath(path)
 	const stats: Stats|null = await fileSystem.getDirentStatsIfExists(normalizePath)
 	if (stats && !stats.isFile()) {
-		mapPanel.webview.postMessage(new RequestMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]})) // TODO move postMessage(..) into (webview)MessageBroker
+		mapTab.messageBroker.postMessage(new RequestMessage({target: 'map', command: 'flyTo', parameters: [normalizePath]}))
 	}
 }
 
