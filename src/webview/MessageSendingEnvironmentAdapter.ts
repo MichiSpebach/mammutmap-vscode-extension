@@ -4,6 +4,10 @@ import * as messageBroker from './messageBroker.js'
 
 export class MessageSendingEnvironmentAdapter implements EnvironmentAdapter {
 
+	public getEnvironmentName(): 'vscode' {
+		return 'vscode'
+	}
+
 	public runShellCommand(command: string): ChildProcess {
 		throw new Error('Method not implemented.');
 	}

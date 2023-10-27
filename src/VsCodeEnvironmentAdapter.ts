@@ -3,6 +3,10 @@ import { ChildProcess, EnvironmentAdapter } from '../out/distCommonJs/core/envir
 
 export class VsCodeEnvironmentAdapter implements EnvironmentAdapter {
 
+	public getEnvironmentName(): 'vscode' {
+		return 'vscode';
+	}
+
 	public runShellCommand(command: string): ChildProcess {
 		throw new Error('Method not implemented.');
 	}

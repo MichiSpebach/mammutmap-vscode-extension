@@ -65,14 +65,10 @@ async function createOrRevealMapTab(context: vscode.ExtensionContext): Promise<M
 		updateFileExplorerInterval()
 	})
 
-	await new Promise<void>(async resolve => {
-		const timeout = setTimeout(() => {
-			vscode.window.showWarningMessage(`createOrRevealMapPanel Mammutmap did not greet within 5 seconds.`)
-			resolve()
-		}, 5000)
-		await messageBroker.greetingFromWebview.get()
-		clearTimeout(timeout)
-		resolve()
+	await util.timelimitPromise({
+		promise: messageBroker.greetingFromWebview.get(), 
+		resolveOnTimeout: () => vscode.window.showWarningMessage(`createOrRevealMapTab: Mammutmap tab did not greet within 5 seconds.`),
+		timelimitInMS: 5000
 	})
 	return mapTab
 }
