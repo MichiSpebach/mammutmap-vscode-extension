@@ -1,10 +1,10 @@
-import { EnvironmentAdapter } from '../out/distCommonJs/core/environmentAdapter'
 import { FileSystemAdapter } from '../out/distCommonJs/core/fileSystemAdapter'
+import { VsCodeEnvironmentAdapter } from './VsCodeEnvironmentAdapter'
 
-export let environment: EnvironmentAdapter
+export let environment: VsCodeEnvironmentAdapter
 export let fileSystem: FileSystemAdapter
 
-export function initEnvironment(implementation: EnvironmentAdapter): void {
+export function initEnvironment(implementation: VsCodeEnvironmentAdapter): void {
     environment = implementation
 }
 

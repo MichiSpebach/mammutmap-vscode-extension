@@ -45,13 +45,13 @@ async function createOrRevealMapTab(context: vscode.ExtensionContext): Promise<M
 		return mapTab
 	}
 	
-	const panel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.One, {
+	const panel = vscode.window.createWebviewPanel('mammutmap', 'Mammutmap', vscode.ViewColumn.Active, {
 		enableScripts: true,
 		localResourceRoots: [vscode.Uri.file(context.extensionPath)],
 		retainContextWhenHidden: true
 	})
 	panel.webview.html = getWebviewContent(panel.webview, context.extensionUri)
-	const messageBroker = new MessageBroker(panel.webview)
+	const messageBroker = new MessageBroker(panel)
 	mapTab = {panel, messageBroker}
 
 	mapTab.panel.webview.onDidReceiveMessage((message: Object) => messageBroker.processMessage(RequestMessage.ofRawObject(message)))

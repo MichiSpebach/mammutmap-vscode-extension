@@ -1350,6 +1350,206 @@
 			"tags": [
 				"library"
 			]
+		},
+		{
+			"id": "9j5v5nucn3",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 24,
+						"y": 60
+					},
+					{
+						"boxId": "gp3bgbfs19",
+						"boxName": "VsCodeEnvironmentAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.776,
+						"y": 58.072
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 48.4,
+						"y": 14.8
+					},
+					{
+						"boxId": "pip6kke56ng",
+						"boxName": "core",
+						"x": 42,
+						"y": 34
+					},
+					{
+						"boxId": "n0r6uso5jho",
+						"boxName": "environmentAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "m3g19m95h2",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 24,
+						"y": 64
+					},
+					{
+						"boxId": "4hkhp07kd8o",
+						"boxName": "setup.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.776,
+						"y": 58.072
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 48.4,
+						"y": 14.8
+					},
+					{
+						"boxId": "pip6kke56ng",
+						"boxName": "core",
+						"x": 42,
+						"y": 34
+					},
+					{
+						"boxId": "n0r6uso5jho",
+						"boxName": "environmentAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "ppi1aunjn58",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 24,
+						"y": 64
+					},
+					{
+						"boxId": "4hkhp07kd8o",
+						"boxName": "setup.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 14.552,
+						"y": 58.072
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 46.8,
+						"y": 14.8
+					},
+					{
+						"boxId": "pip6kke56ng",
+						"boxName": "core",
+						"x": 34,
+						"y": 34
+					},
+					{
+						"boxId": "4kjt6ocgh3o",
+						"boxName": "fileSystemAdapter.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
+		},
+		{
+			"id": "u7phmj8cleo",
+			"from": {
+				"path": [
+					{
+						"boxId": "g4e1oheuieg",
+						"boxName": "src",
+						"x": 88,
+						"y": 12
+					},
+					{
+						"boxId": "q31f4o8vvs8",
+						"boxName": "MessageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "vgg2cv9tm6g",
+						"boxName": "out",
+						"x": 15.672,
+						"y": 59.192
+					},
+					{
+						"boxId": "dc3b1uugla8",
+						"boxName": "distCommonJs",
+						"x": 54.8,
+						"y": 22.8
+					},
+					{
+						"boxId": "pip6kke56ng",
+						"boxName": "core",
+						"x": 74,
+						"y": 74
+					},
+					{
+						"boxId": "ufjcog9440o",
+						"boxName": "RenderManager.js",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"tags": [
+				"library"
+			]
 		}
 	],
 	"nodes": [],
@@ -1379,7 +1579,7 @@
 		},
 		{
 			"name": "library",
-			"count": 21,
+			"count": 25,
 			"appearance": {
 				"mode": "visibleEnds"
 			}

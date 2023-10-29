@@ -1,7 +1,7 @@
 {
 	"id": "g4e1oheuieg",
-	"x": 32,
-	"y": 32,
+	"x": 28,
+	"y": 60,
 	"width": 40,
 	"height": 28,
 	"links": [
@@ -449,6 +449,185 @@
 			"tags": [
 				"message passing"
 			]
+		},
+		{
+			"id": "get9u0q8hh",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "gp3bgbfs19",
+						"boxName": "VsCodeEnvironmentAdapter.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "j1ck84cjbko",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "hje7stgk8b",
+						"boxName": "sharedCommonJs",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "nq33q6dibvo",
+						"boxName": "RequestMessage.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "gj7h9p5ghf",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "q31f4o8vvs8",
+						"boxName": "MessageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "2hfrc9ikfio",
+			"from": {
+				"path": [
+					{
+						"boxId": "2e08nh5g5n",
+						"boxName": "extension.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "4hkhp07kd8o",
+						"boxName": "setup.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "pk8lnvg2rqg",
+			"from": {
+				"path": [
+					{
+						"boxId": "q31f4o8vvs8",
+						"boxName": "MessageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "4hkhp07kd8o",
+						"boxName": "setup.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "smahqe2ivs",
+			"from": {
+				"path": [
+					{
+						"boxId": "q31f4o8vvs8",
+						"boxName": "MessageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "hje7stgk8b",
+						"boxName": "sharedCommonJs",
+						"x": 26,
+						"y": 26
+					},
+					{
+						"boxId": "nq33q6dibvo",
+						"boxName": "RequestMessage.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
+		},
+		{
+			"id": "dm9urccg4a",
+			"from": {
+				"path": [
+					{
+						"boxId": "q31f4o8vvs8",
+						"boxName": "MessageBroker.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			},
+			"to": {
+				"path": [
+					{
+						"boxId": "hje7stgk8b",
+						"boxName": "sharedCommonJs",
+						"x": 26,
+						"y": 74
+					},
+					{
+						"boxId": "9t8mth0uuro",
+						"boxName": "ResponseMessage.ts",
+						"x": 50,
+						"y": 50
+					}
+				]
+			}
 		}
 	],
 	"nodes": [

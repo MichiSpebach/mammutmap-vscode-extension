@@ -5,11 +5,11 @@ import { ResponseMessage } from './sharedCommonJs/ResponseMessage'
 import { environment, fileSystem } from './setup'
 
 export class MessageBroker {
-	private readonly webview: vscode.Webview
+	private readonly panel: vscode.WebviewPanel
 	public readonly greetingFromWebview = new SchedulablePromise<void>(() => {})
 
-	public constructor(webview: vscode.Webview) {
-		this.webview = webview
+	public constructor(panel: vscode.WebviewPanel) {
+		this.panel = panel
 	}
 	
 	public async processMessage(message: RequestMessage): Promise<void> {
@@ -34,6 +34,26 @@ export class MessageBroker {
 				}
 				return
 			case 'environment':
+				if (message.command === 'openFile') { // TODO: introduce MapTabEnvironmentAdapter instead
+					if (message.parameters.length !== 1) {
+						errors.push(`expected exactly one parameter, but are ${message.parameters.length}`)
+						this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
+						return
+					}
+					if (typeof message.parameters[0] !== 'string') {
+						errors.push(`expected a string as parameter, but is ${typeof message.parameters}`)
+						this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
+						return
+					}
+					try {
+						environment.openFile(message.parameters[0], {nearButAvoidColumn: this.panel.viewColumn})
+						this.postMessage(ResponseMessage.newSuccess({id, result: {}, error: buildErrorMessageIfExistent(errors)}))
+					} catch(error: unknown) {
+						errors.push(error?.toString() ?? 'unknown environment error')
+						this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
+					}
+					return
+				}
 				try {
 					const result: unknown = await (environment as any)[message.command](...message.parameters)
 					this.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
@@ -61,6 +81,6 @@ export class MessageBroker {
 	}
 
 	public async postMessage(message: RequestMessage|ResponseMessage): Promise<void> {
-		await this.webview.postMessage(message)
+		await this.panel.webview.postMessage(message)
 	}
 }
