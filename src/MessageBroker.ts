@@ -3,13 +3,16 @@ import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager'
 import { RequestMessage } from './sharedCommonJs/RequestMessage'
 import { ResponseMessage } from './sharedCommonJs/ResponseMessage'
 import { environment, fileSystem } from './setup'
+import { MapTabEnvironmentAdapter } from './MapTabEnvironmentAdapter'
 
 export class MessageBroker {
 	private readonly panel: vscode.WebviewPanel
+	private readonly mapTabEnvironment: MapTabEnvironmentAdapter
 	public readonly greetingFromWebview = new SchedulablePromise<void>(() => {})
 
 	public constructor(panel: vscode.WebviewPanel) {
 		this.panel = panel
+		this.mapTabEnvironment = new MapTabEnvironmentAdapter(panel)
 	}
 	
 	public async processMessage(message: RequestMessage): Promise<void> {
@@ -34,28 +37,8 @@ export class MessageBroker {
 				}
 				return
 			case 'environment':
-				if (message.command === 'openFile') { // TODO: introduce MapTabEnvironmentAdapter instead
-					if (message.parameters.length !== 1) {
-						errors.push(`expected exactly one parameter, but are ${message.parameters.length}`)
-						this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
-						return
-					}
-					if (typeof message.parameters[0] !== 'string') {
-						errors.push(`expected a string as parameter, but is ${typeof message.parameters}`)
-						this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)}))
-						return
-					}
-					try {
-						environment.openFile(message.parameters[0], {nearButAvoidColumn: this.panel.viewColumn})
-						this.postMessage(ResponseMessage.newSuccess({id, result: {}, error: buildErrorMessageIfExistent(errors)}))
-					} catch(error: unknown) {
-						errors.push(error?.toString() ?? 'unknown environment error')
-						this.postMessage(ResponseMessage.newFailure({id, error: buildErrorMessage(errors)})) // TODO: also send stacktrace?
-					}
-					return
-				}
 				try {
-					const result: unknown = await (environment as any)[message.command](...message.parameters)
+					const result: unknown = await (this.mapTabEnvironment as any)[message.command](...message.parameters)
 					this.postMessage(ResponseMessage.newSuccess({id, result: result ?? {}, error: buildErrorMessageIfExistent(errors)}))
 				} catch(error: unknown) {
 					errors.push(error?.toString() ?? 'unknown environment error')
