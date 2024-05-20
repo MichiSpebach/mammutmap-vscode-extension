@@ -7,10 +7,6 @@ export function normalizePath(path: string): string {
 	let normalizedPath: string = path.replace(/^[/](\w[:][/])/, '$1')
 	normalizedPath = normalizedPath.replace(/^(\w[:]\\)/, start => start.toLowerCase())
 
-	if (path === normalizedPath) {
-		vscode.window.showWarningMessage(`normalizePath expected path '${path}' to start with '/c:/' or 'C:\\'.`)
-	}
-
 	return util.replaceBackslashesWithSlashes(normalizedPath)
 }
 
