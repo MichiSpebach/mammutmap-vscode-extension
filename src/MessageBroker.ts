@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { SchedulablePromise } from '../out/distCommonJs/core/RenderManager'
+import { SchedulablePromise } from '../out/distCommonJs/core/renderEngine/renderManager'
 import { RequestMessage } from './sharedCommonJs/RequestMessage'
 import { ResponseMessage } from './sharedCommonJs/ResponseMessage'
 import { environment, fileSystem } from './setup'
